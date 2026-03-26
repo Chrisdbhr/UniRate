@@ -124,7 +124,11 @@ namespace UniRate.Internals {
                     // QualitySettings.vSyncCount value must be 0, 1, 2, 3, or 4.
                     // QualitySettings.vSyncCount is ignored on iOS.
                     vSyncCount = Mathf.Clamp(
+#if UNITY_2022_2_OR_NEWER
+                        Mathf.RoundToInt((float)UnityScreen.currentResolution.refreshRateRatio.value) / targetFrameRate,
+#else
                         UnityScreen.currentResolution.refreshRate / targetFrameRate,
+#endif
                         1,
                         4
                     );
